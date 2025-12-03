@@ -17,6 +17,9 @@
 
     # You can also split up your configuration and import pieces of it here:
     # ./nvim.nix
+    
+    # Terminal configuration
+    ./terminal
   ];
 
   nixpkgs = {
@@ -47,11 +50,27 @@
   home = {
     username = "pedro-pires";
     homeDirectory = "/home/pedro-pires";
+    
+    # Install JetBrains Mono font
+    packages = with pkgs; [
+      jetbrains-mono
+    ];
   };
 
-  # Add stuff for your user as you see fit:
-  # programs.neovim.enable = true;
-  # home.packages = with pkgs; [ steam ];
+  # Configure fonts
+  fonts.fontconfig.enable = true;
+
+  # VSCode configuration with JetBrains Mono
+  programs.vscode = {
+    enable = true;
+    userSettings = {
+      "editor.fontFamily" = "'JetBrains Mono', 'monospace'";
+      "editor.fontSize" = 13;
+      "editor.fontLigatures" = true;
+      "terminal.integrated.fontFamily" = "'JetBrains Mono'";
+      "terminal.integrated.fontSize" = 13;
+    };
+  };
 
   # Enable home-manager and git
   programs.home-manager.enable = true;
