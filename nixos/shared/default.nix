@@ -76,6 +76,10 @@
     git
     google-chrome
     vscode
+    telegram-desktop
+    keepassxc
+    google-drive-ocamlfuse
+    slack
   ];
 
   # Use latest kernel
