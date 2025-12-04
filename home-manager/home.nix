@@ -54,17 +54,6 @@
   # Configure fonts
   fonts.fontconfig.enable = true;
 
-  # VSCode configuration with JetBrains Mono (using new profiles syntax)
-  programs.vscode = {
-    enable = true;
-    profiles.default.userSettings = {
-      "editor.fontFamily" = "'JetBrains Mono', 'monospace'";
-      "editor.fontSize" = 13;
-      "editor.fontLigatures" = true;
-      "terminal.integrated.fontFamily" = "'JetBrains Mono'";
-      "terminal.integrated.fontSize" = 13;
-    };
-  };
 
   # Enable home-manager and git
   programs.home-manager.enable = true;
