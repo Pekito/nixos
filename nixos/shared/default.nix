@@ -13,6 +13,7 @@
   environment.sessionVariables = {
     GTK_IM_MODULE = "cedilla";
     QT_IM_MODULE = "cedilla";
+    XMODIFIERS = "@im=none";
   };
 
   # Configure nixpkgs with overlays since home-manager.useGlobalPkgs = true

@@ -35,15 +35,20 @@
     ];
 
     # Cedilla fix: Create .XCompose file for proper cedilla behavior
-    # This overrides the default dead_acute + c = ć to produce ç instead
-    file.".XCompose".text = ''
-      # Include the default compose file for your locale
-      include "%L"
-
-      # Override C with acute to produce cedilla instead
-      <dead_acute> <C> : "Ç" Ccedilla # LATIN CAPITAL LETTER C WITH CEDILLA
-      <dead_acute> <c> : "ç" ccedilla # LATIN SMALL LETTER C WITH CEDILLA
-    '';
+    # This replaces all occurrences of accented-c (ć/Ć) with cedilla-c (ç/Ç)
+    # Based on: https://github.com/marcopaganini/gnome-cedilla-fix
+    file.".XCompose".text = 
+      let
+        # Get the system compose file for the current locale
+        systemCompose = builtins.readFile "${pkgs.xorg.libX11}/share/X11/locale/en_US.UTF-8/Compose";
+        # Replace accented-c with cedilla-c
+        # ć (U+0107) -> ç (U+00E7)
+        # Ć (U+0106) -> Ç (U+00C7)
+        fixedCompose = builtins.replaceStrings 
+          ["ć" "Ć"] 
+          ["ç" "Ç"] 
+          systemCompose;
+      in fixedCompose;
   };
 
   # Configure fonts
