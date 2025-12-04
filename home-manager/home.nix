@@ -68,7 +68,17 @@
 
   # Enable home-manager and git
   programs.home-manager.enable = true;
-  programs.git.enable = true;
+  programs.git = {
+    enable = true;
+    userName = "Pedro Luiz";
+    userEmail = "p3dr0c4@live.com";
+    # Additional config options
+    extraConfig = {
+      init.defaultBranch = "master";
+      pull.rebase = true;
+      push.autoSetupRemote = true;
+    };
+  };
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
