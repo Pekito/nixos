@@ -13,7 +13,6 @@
   environment.sessionVariables = {
     GTK_IM_MODULE = "cedilla";
     QT_IM_MODULE = "cedilla";
-    XMODIFIERS = "@im=none";
   };
 
   # Configure nixpkgs with overlays since home-manager.useGlobalPkgs = true
@@ -64,7 +63,11 @@
     LC_TIME = "pt_BR.UTF-8";
     LC_CTYPE = lib.mkDefault "pt_BR.UTF-8"; # Fix ç in us-intl.
   };
-
+  i18n.inputMethod = {
+        enable = true;
+        type = "fcitx5";
+        fcitx5.waylandFrontend = true;
+  };
   # Enable the KDE Plasma Desktop Environment
   services.displayManager.sddm.enable = true;
   services.displayManager.sddm.wayland.enable = true;
@@ -116,6 +119,7 @@
     google-drive-ocamlfuse
     slack
     firefox
+    nodejs-22_18
   ];
   # Use latest kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;

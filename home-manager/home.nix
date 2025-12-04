@@ -20,6 +20,9 @@
     
     # Terminal configuration
     ./terminal
+    
+    # Import plasma-manager
+    inputs.plasma-manager.homeManagerModules.plasma-manager
   ];
 
   # Note: nixpkgs configuration is disabled when home-manager.useGlobalPkgs = true
@@ -54,6 +57,21 @@
   # Configure fonts
   fonts.fontconfig.enable = true;
 
+  # Configure Plasma
+  programs.plasma = {
+    enable = true;
+    
+    # Configure keyboard layout
+    input.keyboard = {
+      layouts = [
+        {
+          layout = "us";
+          variant = "intl";
+          displayName = "US Int";
+        }
+      ];
+    };
+  };
 
   # Enable home-manager and git
   programs.home-manager.enable = true;
