@@ -75,10 +75,9 @@
 
   # Configure keymap in X11
   services.xserver.xkb = {
-    layout = "us";
-    variant = "intl";
+    layout = lib.mkDefault "us";
+    variant = lib.mkDefault "intl";
   };
-
   # Configure console keymap
   console.keyMap = "us-acentos";
 
@@ -120,6 +119,7 @@
     slack
     firefox
     nodejs-22_18
+    hurl
   ];
   # Use latest kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
