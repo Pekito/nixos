@@ -1,5 +1,5 @@
 # Swift laptop configuration
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   imports = [

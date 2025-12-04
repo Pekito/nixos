@@ -22,30 +22,8 @@
     ./terminal
   ];
 
-  nixpkgs = {
-    # You can add overlays here
-    overlays = [
-      # Add overlays your own flake exports (from overlays and pkgs dir):
-      inputs.self.overlays.additions
-      inputs.self.overlays.modifications
-      inputs.self.overlays.unstable-packages
-
-      # You can also add overlays exported from other flakes:
-      # neovim-nightly-overlay.overlays.default
-
-      # Or define it inline, for example:
-      # (final: prev: {
-      #   hi = final.hello.overrideAttrs (oldAttrs: {
-      #     patches = [ ./change-hello-to-hi.patch ];
-      #   });
-      # })
-    ];
-    # Configure your nixpkgs instance
-    config = {
-      # Disable if you don't want unfree packages
-      allowUnfree = true;
-    };
-  };
+  # Note: nixpkgs configuration is disabled when home-manager.useGlobalPkgs = true
+  # Overlays and config are managed at the NixOS level in nixos/shared/default.nix
 
   home = {
     username = "pedro-pires";
@@ -60,10 +38,10 @@
   # Configure fonts
   fonts.fontconfig.enable = true;
 
-  # VSCode configuration with JetBrains Mono
+  # VSCode configuration with JetBrains Mono (using new profiles syntax)
   programs.vscode = {
     enable = true;
-    userSettings = {
+    profiles.default.userSettings = {
       "editor.fontFamily" = "'JetBrains Mono', 'monospace'";
       "editor.fontSize" = 13;
       "editor.fontLigatures" = true;

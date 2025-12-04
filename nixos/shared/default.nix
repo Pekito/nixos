@@ -1,7 +1,34 @@
 # Shared configuration for all hosts
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
+  imports = [
+    inputs.home-manager.nixosModules.home-manager
+  ];
+
+  # Configure nixpkgs with overlays since home-manager.useGlobalPkgs = true
+  nixpkgs = {
+    overlays = [
+      # Add overlays from your flake
+      inputs.self.overlays.additions
+      inputs.self.overlays.modifications
+      inputs.self.overlays.unstable-packages
+    ];
+    config = {
+      allowUnfree = true;
+    };
+  };
+
+  home-manager = {
+    extraSpecialArgs = { inherit inputs; };
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    backupFileExtension = "backup";
+    users = {
+      pedro-pires = import ../../home-manager/home.nix;
+    };
+  };
+
   # Bootloader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -66,8 +93,6 @@
     ];
   };
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
 
   # Common system packages
   environment.systemPackages = with pkgs; [

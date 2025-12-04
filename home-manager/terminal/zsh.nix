@@ -10,8 +10,8 @@
 
     shellAliases = {
       ll = "ls -la";
-      update = "sudo nixos-rebuild switch --flake ~/nix-config";
-      home-update = "home-manager switch --flake ~/nix-config";
+      update = "sudo nixos-rebuild switch --flake ~/Documents/nixos-config";
+      home-update = "sudo nixos-rebuild switch --flake ~/Documents/nixos-config";
     };
 
     history = {
@@ -29,7 +29,7 @@
       ];
     };
 
-    initExtra = ''
+    initContent = ''
       # Add any additional zsh configuration here
       bindkey '^[[A' history-substring-search-up
       bindkey '^[[B' history-substring-search-down
