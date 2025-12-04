@@ -69,10 +69,6 @@
       scrolling = {
         history = 10000;
       };
-
-      shell = {
-        program = "${pkgs.zsh}/bin/zsh";
-      };
     };
   };
 }

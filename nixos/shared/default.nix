@@ -100,6 +100,7 @@
     packages = with pkgs; [
       kdePackages.kate
     ];
+    shell = pkgs.fish;
   };
 
 
@@ -118,4 +119,6 @@
   ];
   # Use latest kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
+
+  programs.fish.enable = true;
 }
