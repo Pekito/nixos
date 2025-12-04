@@ -1,7 +1,7 @@
 # Terminal configuration
 {
   imports = [
-    ./zsh.nix
+    ./fish.nix
     ./alacritty.nix
     ./starship.nix
   ];
