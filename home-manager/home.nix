@@ -33,6 +33,17 @@
     packages = with pkgs; [
       jetbrains-mono
     ];
+
+    # Cedilla fix: Create .XCompose file for proper cedilla behavior
+    # This overrides the default dead_acute + c = ć to produce ç instead
+    file.".XCompose".text = ''
+      # Include the default compose file for your locale
+      include "%L"
+
+      # Override C with acute to produce cedilla instead
+      <dead_acute> <C> : "Ç" Ccedilla # LATIN CAPITAL LETTER C WITH CEDILLA
+      <dead_acute> <c> : "ç" ccedilla # LATIN SMALL LETTER C WITH CEDILLA
+    '';
   };
 
   # Configure fonts

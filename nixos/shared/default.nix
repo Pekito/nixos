@@ -6,6 +6,15 @@
     inputs.home-manager.nixosModules.home-manager
   ];
 
+  # Cedilla fix for US International keyboard layout
+  # This makes '+c produce ç instead of ć
+  # Note: On pure Wayland, some apps may need the XCompose file (configured in home-manager)
+  # For XWayland apps and GTK/Qt apps, these environment variables help
+  environment.sessionVariables = {
+    GTK_IM_MODULE = "cedilla";
+    QT_IM_MODULE = "cedilla";
+  };
+
   # Configure nixpkgs with overlays since home-manager.useGlobalPkgs = true
   nixpkgs = {
     overlays = [
@@ -64,7 +73,7 @@
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
-    variant = "altgr-intl";
+    variant = "intl";
   };
 
   # Configure console keymap
@@ -105,8 +114,8 @@
     keepassxc
     google-drive-ocamlfuse
     slack
+    firefox
   ];
-
   # Use latest kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
 }
