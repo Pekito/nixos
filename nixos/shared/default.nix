@@ -121,6 +121,7 @@
     nodejs-22_18
     hurl
     devenv
+    tmux
   ];
   # Use latest kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
