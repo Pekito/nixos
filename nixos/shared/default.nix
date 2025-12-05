@@ -120,6 +120,7 @@
     firefox
     nodejs-22_18
     hurl
+    devenv
   ];
   # Use latest kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
