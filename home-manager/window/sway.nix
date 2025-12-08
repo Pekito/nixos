@@ -19,7 +19,37 @@
     brightnessctl   # Brightness control
     pamixer         # PulseAudio mixer CLI
     swayr           # Window switcher and more
+    gammastep       # Night light / blue light filter (CLI + indicator)
   ]);
+
+  # Gammastep (night light) service configuration
+  services.gammastep = lib.mkIf config.wayland.windowManager.sway.enable {
+    enable = true;
+    tray = true;  # Enable system tray indicator for GUI control
+    
+    # Location for automatic sunrise/sunset (set your coordinates)
+    # You can find your coordinates at: https://www.latlong.net/
+    provider = "manual";
+    latitude = -23.5505;  # São Paulo City
+    longitude = -46.6333;
+    
+    # Temperature settings (in Kelvin)
+    # Lower values = warmer/more orange, Higher values = cooler/more blue
+    temperature = {
+      day = 6500;    # Neutral daylight
+      night = 3500;  # Warm night light
+    };
+    
+    # Brightness settings (0.1 to 1.0)
+    settings = {
+      general = {
+        brightness-day = 1.0;
+        brightness-night = 0.8;
+        fade = 1;  # Smooth transition between day/night
+        adjustment-method = "wayland";
+      };
+    };
+  };
 
   wayland.windowManager.sway = {
     # Use the system's Sway package with wrapGTK for proper GTK integration
@@ -49,8 +79,8 @@
       
       # Window gaps
       gaps = {
-        inner = 8;
-        outer = 4;
+        inner = 4;
+        outer = 2;
       };
       
       # Window borders
@@ -62,6 +92,8 @@
           { criteria = { app_id = "pavucontrol"; }; command = "floating enable"; }
           { criteria = { app_id = "blueman-manager"; }; command = "floating enable"; }
           { criteria = { title = "Picture-in-Picture"; }; command = "floating enable"; }
+          # Float gammastep indicator if it opens a window
+          { criteria = { app_id = "gammastep-indicator"; }; command = "floating enable"; }
         ];
       };
       
@@ -93,6 +125,15 @@
       output = {
         "*" = {
           bg = "#1e1e1e solid_color";
+        };
+        # HDMI monitor on the left at 165Hz
+        "HDMI-A-1" = {
+          position = "0 0";
+          mode = "1920x1080@165Hz";  # Adjust resolution if needed
+        };
+        # Laptop display on the right
+        "eDP-1" = {
+          position = "1920 0";  # Adjust X position based on HDMI resolution
         };
       };
       
@@ -159,6 +200,9 @@
         "XF86AudioMicMute" = "exec pamixer --default-source -t";
         "XF86MonBrightnessUp" = "exec brightnessctl set +5%";
         "XF86MonBrightnessDown" = "exec brightnessctl set 5%-";
+
+        # Night light toggle (quick toggle via keybind)
+        "${mod}+n" = "exec pkill -USR1 gammastep";  # Toggle on/off
 
         # Alt+Tab window switching with swayr
         "Mod1+Tab" = "exec swayr switch-window";
@@ -295,7 +339,7 @@
         
         modules-left = [ "sway/workspaces" "sway/mode" ];
         modules-center = [ "sway/window" ];
-        modules-right = [ "pulseaudio" "network" "battery" "clock" "tray" ];
+        modules-right = [ "custom/gammastep" "pulseaudio" "network" "battery" "clock" "tray" ];
         
         "sway/workspaces" = {
           disable-scroll = true;
@@ -308,6 +352,20 @@
         
         "sway/window" = {
           max-length = 50;
+        };
+        
+        # Night light indicator for waybar
+        "custom/gammastep" = {
+          format = "{icon}";
+          format-icons = {
+            on = "󰌵";    # Sun icon when active
+            off = "󰌶";   # Moon icon when inactive
+          };
+          exec = "if pgrep -x gammastep > /dev/null; then echo '{\"class\": \"on\", \"alt\": \"on\", \"tooltip\": \"Night light: ON\"}'; else echo '{\"class\": \"off\", \"alt\": \"off\", \"tooltip\": \"Night light: OFF\"}'; fi";
+          return-type = "json";
+          interval = 5;
+          on-click = "pkill -USR1 gammastep";  # Toggle night light
+          tooltip = true;
         };
         
         clock = {
@@ -386,8 +444,17 @@
       #battery,
       #network,
       #pulseaudio,
+      #custom-gammastep,
       #tray {
         padding: 0 10px;
+      }
+
+      #custom-gammastep.on {
+        color: #ffd866;
+      }
+
+      #custom-gammastep.off {
+        color: #5b5b5b;
       }
 
       #battery.warning {
