@@ -23,6 +23,9 @@
     
     # Window manager configuration (Plasma, Sway, etc.)
     ./window
+
+    # Desktop module - automatically configures based on NixOS desktop choice
+    ../modules/home-manager
   ];
 
   # Note: nixpkgs configuration is disabled when home-manager.useGlobalPkgs = true
@@ -76,7 +79,7 @@
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "25.05";
-  wayland.windowManager.sway.enable = true;
-  programs.waybar.enable = true;
-  programs.plasma.enable = lib.mkForce false;  # Disable Plasma if switching
+
+  # Desktop environment (plasma/sway/none) is now configured automatically
+  # based on mySystem.desktop.environment set in your NixOS host config
 }

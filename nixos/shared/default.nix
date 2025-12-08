@@ -4,6 +4,7 @@
 {
   imports = [
     inputs.home-manager.nixosModules.home-manager
+    ../../modules/nixos
   ];
 
   # Cedilla fix for US International keyboard layout
@@ -68,11 +69,10 @@
         type = "fcitx5";
         fcitx5.waylandFrontend = true;
   };
-  # Enable the KDE Plasma Desktop Environment
-  services.displayManager.sddm.enable = true;
-  services.displayManager.sddm.wayland.enable = true;
-  services.desktopManager.plasma6.enable = true;
-  programs.sway.enable = true;
+
+  # Desktop environment is now configured via mySystem.desktop.environment
+  # Set it in your host-specific config (e.g., nixos/zenbook/default.nix)
+  # Options: "plasma", "sway", "none"
 
   # Configure keymap in X11
   services.xserver.xkb = {

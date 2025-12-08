@@ -7,9 +7,20 @@
   #   wayland.windowManager.sway.enable = true;
   #   programs.plasma.enable = lib.mkForce false;
 
+  # Sway-related packages (only installed when sway is enabled)
+  home.packages = lib.mkIf config.wayland.windowManager.sway.enable (with pkgs; [
+    swaylock        # Screen locker
+    swayidle        # Idle management daemon
+    wl-clipboard    # Wayland clipboard utilities
+    mako            # Notification daemon
+    wofi            # Application launcher (rofi alternative for Wayland)
+    grim            # Screenshot utility
+    slurp           # Screen area selection
+    brightnessctl   # Brightness control
+    pamixer         # PulseAudio mixer CLI
+  ]);
+
   wayland.windowManager.sway = {
-    enable = lib.mkDefault false;
-    
     # Use the system's Sway package with wrapGTK for proper GTK integration
     package = pkgs.sway;
     
@@ -18,20 +29,6 @@
     
     # Enable XWayland for X11 app compatibility
     xwayland = true;
-    
-    # Extra packages to install with Sway
-    extraPackages = with pkgs; [
-      swaylock        # Screen locker
-      swayidle        # Idle management daemon
-      wl-clipboard    # Wayland clipboard utilities
-      mako            # Notification daemon
-      wofi            # Application launcher (rofi alternative for Wayland)
-      grim            # Screenshot utility
-      slurp           # Screen area selection
-      waybar          # Status bar
-      brightnessctl   # Brightness control
-      pamixer         # PulseAudio mixer CLI
-    ];
     
     config = rec {
       # Use alacritty as the default terminal

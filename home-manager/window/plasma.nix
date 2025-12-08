@@ -4,12 +4,11 @@
 {
   imports = [
     # Import plasma-manager
-    inputs.plasma-manager.homeManagerModules.plasma-manager
+    inputs.plasma-manager.homeModules.plasma-manager
   ];
 
   # Configure Plasma
   programs.plasma = {
-    enable = true;
     
     # Configure keyboard layout
     input.keyboard = {
