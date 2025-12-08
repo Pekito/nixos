@@ -18,6 +18,7 @@
     slurp           # Screen area selection
     brightnessctl   # Brightness control
     pamixer         # PulseAudio mixer CLI
+    swayr           # Window switcher and more
   ]);
 
   wayland.windowManager.sway = {
@@ -111,10 +112,6 @@
         # Lock screen
         "${mod}+l" = "exec swaylock -f -c 1e1e1e";
         
-        # Focus movement (vim-like)
-        "${mod}+h" = "focus left";
-        "${mod}+j" = "focus down";
-        "${mod}+k" = "focus up";
         # Note: ${mod}+l is used for lock, use arrows for right focus
         "${mod}+Right" = "focus right";
         "${mod}+Left" = "focus left";
@@ -160,6 +157,10 @@
         "XF86AudioMicMute" = "exec pamixer --default-source -t";
         "XF86MonBrightnessUp" = "exec brightnessctl set +5%";
         "XF86MonBrightnessDown" = "exec brightnessctl set 5%-";
+
+        # Alt+Tab window switching with swayr
+        "Mod1+Tab" = "exec swayr switch-window";
+        "Mod1+Shift+Tab" = "exec swayr switch-window";
       };
       
       # Workspace configuration
@@ -171,6 +172,8 @@
         { command = "gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'"; }
         # Start notification daemon
         { command = "mako"; }
+        # Start swayr daemon
+        { command = "env RUST_BACKTRACE=1 RUST_LOG=swayr=debug swayrd"; }
         # Idle management
         { 
           command = ''
@@ -182,7 +185,7 @@
           ''; 
         }
       ];
-      
+            
       # Status bar configuration
       bars = [
         {
