@@ -21,8 +21,8 @@
     # Terminal configuration
     ./terminal
     
-    # Import plasma-manager
-    inputs.plasma-manager.homeManagerModules.plasma-manager
+    # Window manager configuration (Plasma, Sway, etc.)
+    ./window
   ];
 
   # Note: nixpkgs configuration is disabled when home-manager.useGlobalPkgs = true
@@ -57,22 +57,6 @@
   # Configure fonts
   fonts.fontconfig.enable = true;
 
-  # Configure Plasma
-  programs.plasma = {
-    enable = true;
-    
-    # Configure keyboard layout
-    input.keyboard = {
-      layouts = [
-        {
-          layout = "us";
-          variant = "intl";
-          displayName = "US Int";
-        }
-      ];
-    };
-  };
-
   # Enable home-manager and git
   programs.home-manager.enable = true;
   programs.git = {
@@ -92,4 +76,7 @@
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "25.05";
+  wayland.windowManager.sway.enable = true;
+  programs.waybar.enable = true;
+  programs.plasma.enable = lib.mkForce false;  # Disable Plasma if switching
 }
