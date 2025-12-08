@@ -13,34 +13,30 @@
     swayidle        # Idle management daemon
     wl-clipboard    # Wayland clipboard utilities
     mako            # Notification daemon
-    wofi            # Application launcher (rofi alternative for Wayland)
+    wofi            # Application launcher 
+    (rofi alternative for Wayland)
     grim            # Screenshot utility
     slurp           # Screen area selection
     brightnessctl   # Brightness control
     pamixer         # PulseAudio mixer CLI
     swayr           # Window switcher and more
   ]);
-
+  
   wayland.windowManager.sway = {
     # Use the system's Sway package with wrapGTK for proper GTK integration
     package = pkgs.sway;
-    
     # Enable swaynag for warning/error messages
     swaynag.enable = true;
-    
     # Enable XWayland for X11 app compatibility
     xwayland = true;
     
     config = rec {
       # Use alacritty as the default terminal
       terminal = "alacritty";
-      
       # Use wofi as the application launcher
       menu = "wofi --show drun";
-      
       # Use Super (Windows) key as the modifier
       modifier = "Mod4";
-      
       # Default font
       fonts = {
         names = [ "JetBrains Mono" ];
@@ -89,10 +85,23 @@
         };
       };
       
-      # Output (display) configuration - customize per host if needed
+      # Output (display) configuration - CUSTOMIZED
       output = {
+        # General background for all outputs
         "*" = {
           bg = "#1e1e1e solid_color";
+        };
+        
+        # Secondary monitor (HDMI-A-1) configuration: 1920x1080 @ 165.003 Hz
+        "HDMI-A-1" = {
+          mode = "1920x1080@165.003Hz"; # Set the specific mode
+          position = "0,0";             # Position secondary monitor to the left
+        };
+        
+        # Primary monitor (eDP-1) configuration: set position relative to secondary
+        "eDP-1" = {
+          # Keep its default resolution (1920x1200@60.003Hz)
+          position = "1920,0";          # Position primary monitor to the right of secondary
         };
       };
       
@@ -112,6 +121,7 @@
         # Lock screen
         "${mod}+l" = "exec swaylock -f -c 1e1e1e";
         
+        # Focus
         # Note: ${mod}+l is used for lock, use arrows for right focus
         "${mod}+Right" = "focus right";
         "${mod}+Left" = "focus left";
@@ -141,14 +151,20 @@
         "${mod}+space" = "focus mode_toggle";
         "${mod}+a" = "focus parent";
         
+        "Control+${mod}+Left" = "workspace prev";
+        "Control+${mod}+Right" = "workspace next";
+        
         # Scratchpad
         "${mod}+Shift+minus" = "move scratchpad";
         "${mod}+minus" = "scratchpad show";
         
         # Screenshots
-        "${mod}+Print" = "exec grim - | wl-copy"; # Full screen to clipboard
-        "${mod}+Shift+Print" = "exec grim -g \"$(slurp)\" - | wl-copy"; # Selection to clipboard
-        "${mod}+Alt+Print" = "exec grim ~/Pictures/screenshot-$(date +%Y%m%d-%H%M%S).png"; # Save to file
+        "${mod}+Print" = "exec grim - | wl-copy";
+        # Full screen to clipboard
+        "${mod}+Shift+Print" = "exec grim -g \"$(slurp)\" - | wl-copy";
+        # Selection to clipboard
+        "${mod}+Alt+Print" = "exec grim ~/Pictures/screenshot-$(date +%Y%m%d-%H%M%S).png";
+        # Save to file
         
         # Media keys
         "XF86AudioRaiseVolume" = "exec pamixer -i 5";
@@ -157,14 +173,56 @@
         "XF86AudioMicMute" = "exec pamixer --default-source -t";
         "XF86MonBrightnessUp" = "exec brightnessctl set +5%";
         "XF86MonBrightnessDown" = "exec brightnessctl set 5%-";
-
+        
         # Alt+Tab window switching with swayr
         "Mod1+Tab" = "exec swayr switch-window";
         "Mod1+Shift+Tab" = "exec swayr switch-window";
+        
+        # Multi-monitor synchronized workspace switching (Primary monitor: eDP-1, Secondary monitor: HDMI-A-1)
+        # Primary monitor workspaces (1-5) AND Secondary monitor workspaces (6-10)
+        "${mod}+1" = "workspace number 1; workspace number 6";
+        "${mod}+2" = "workspace number 2; workspace number 7";
+        "${mod}+3" = "workspace number 3; workspace number 8";
+        "${mod}+4" = "workspace number 4; workspace number 9";
+        "${mod}+5" = "workspace number 5; workspace number 10";
+        
+        # Move windows to synchronized workspaces
+        "${mod}+Shift+1" = "move container to workspace number 1";
+        "${mod}+Shift+2" = "move container to workspace number 2";
+        "${mod}+Shift+3" = "move container to workspace number 3";
+        "${mod}+Shift+4" = "move container to workspace number 4";
+        "${mod}+Shift+5" = "move container to workspace number 5";
+        
+        # Individual workspace access for second monitor (HDMI-A-1)
+        "${mod}+6" = "workspace number 6";
+        "${mod}+7" = "workspace number 7";
+        "${mod}+8" = "workspace number 8";
+        "${mod}+9" = "workspace number 9";
+        "${mod}+0" = "workspace number 10";
+        
+        # Move windows to individual workspaces on second monitor
+        "${mod}+Shift+6" = "move container to workspace number 6";
+        "${mod}+Shift+7" = "move container to workspace number 7";
+        "${mod}+Shift+8" = "move container to workspace number 8";
+        "${mod}+Shift+9" = "move container to workspace number 9";
+        "${mod}+Shift+0" = "move container to workspace number 10";
       };
       
-      # Workspace configuration
-      workspaceOutputAssign = [ ];
+      # Workspace configuration - Multi-monitor setup (Primary: eDP-1, Secondary: HDMI-A-1)
+      workspaceOutputAssign = [
+        # Main monitor workspaces (1-5) - Assigned to eDP-1
+        { workspace = "1"; output = "eDP-1"; }
+        { workspace = "2"; output = "eDP-1"; }
+        { workspace = "3"; output = "eDP-1"; }
+        { workspace = "4"; output = "eDP-1"; }
+        { workspace = "5"; output = "eDP-1"; }
+        # Secondary monitor workspaces (6-10) - Assigned to HDMI-A-1
+        { workspace = "6"; output = "HDMI-A-1"; }
+        { workspace = "7"; output = "HDMI-A-1"; }
+        { workspace = "8"; output = "HDMI-A-1"; }
+        { workspace = "9"; output = "HDMI-A-1"; }
+        { workspace = "10"; output = "HDMI-A-1"; }
+      ];
       
       # Startup applications
       startup = [
@@ -182,7 +240,7 @@
               timeout 600 'swaymsg "output * dpms off"' \
               resume 'swaymsg "output * dpms on"' \
               before-sleep 'swaylock -f -c 1e1e1e'
-          ''; 
+          '';
         }
       ];
             
@@ -228,7 +286,6 @@
         };
       };
     };
-    
     # Extra configuration lines
     extraConfig = ''
       # Hide cursor after 5 seconds of inactivity
@@ -236,10 +293,9 @@
     '';
   };
 
-  # Waybar configuration
+  # Waybar configuration (assuming this is kept as-is)
   programs.waybar = {
     enable = lib.mkDefault false;
-    
     settings = {
       mainBar = {
         layer = "top";
@@ -262,7 +318,6 @@
         "sway/window" = {
           max-length = 50;
         };
-        
         clock = {
           format = "{:%H:%M}";
           format-alt = "{:%Y-%m-%d %H:%M}";
@@ -279,7 +334,6 @@
           format-plugged = "󰂄 {capacity}%";
           format-icons = [ "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
         };
-        
         network = {
           format-wifi = "󰖩 {signalStrength}%";
           format-ethernet = "󰈀 {ifname}";
