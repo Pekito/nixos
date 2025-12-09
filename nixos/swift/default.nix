@@ -10,7 +10,7 @@
   networking.hostName = "swift";
 
   # Desktop environment: "plasma", "sway", or "none"
-  mySystem.desktop.environment = "plasma";
+  mySystem.desktop.environment = "sway";
 
   # Swift-specific configuration goes here
   # Add any packages or settings specific to this laptop
