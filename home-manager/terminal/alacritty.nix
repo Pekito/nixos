@@ -12,7 +12,7 @@
           y = 10;
         };
         decorations = "full";
-        opacity = 0.95;
+        opacity = 0.98;
       };
 
       font = {
@@ -35,33 +35,34 @@
         size = 11.0;
       };
 
+      # Purple/Violet Light Theme
       colors = {
         primary = {
-          background = "#1e1e1e";
-          foreground = "#d4d4d4";
+          background = "#faf4ff";
+          foreground = "#4a3a5c";
         };
         cursor = {
-          text = "#1e1e1e";
-          cursor = "#d4d4d4";
+          text = "#faf4ff";
+          cursor = "#7c3aed";
         };
         normal = {
-          black = "#1e1e1e";
-          red = "#f48771";
-          green = "#a9dc76";
-          yellow = "#ffd866";
-          blue = "#78dce8";
-          magenta = "#ab9df2";
-          cyan = "#78dce8";
-          white = "#d4d4d4";
+          black = "#4a3a5c";
+          red = "#dc2626";
+          green = "#16a34a";
+          yellow = "#ca8a04";
+          blue = "#6366f1";
+          magenta = "#9333ea";
+          cyan = "#0891b2";
+          white = "#f5f5f5";
         };
         bright = {
-          black = "#5b5b5b";
-          red = "#f48771";
-          green = "#a9dc76";
-          yellow = "#ffd866";
-          blue = "#78dce8";
-          magenta = "#ab9df2";
-          cyan = "#78dce8";
+          black = "#6b5b7a";
+          red = "#ef4444";
+          green = "#22c55e";
+          yellow = "#eab308";
+          blue = "#818cf8";
+          magenta = "#a855f7";
+          cyan = "#06b6d4";
           white = "#ffffff";
         };
       };

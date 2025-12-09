@@ -77,10 +77,10 @@
         size = 10.0;
       };
       
-      # Window gaps
+      # Window gaps - reduced for tighter layout
       gaps = {
-        inner = 4;
-        outer = 2;
+        inner = 2;
+        outer = 0;
       };
       
       # Window borders
@@ -124,7 +124,7 @@
       # Output (display) configuration - customize per host if needed
       output = {
         "*" = {
-          bg = "#1e1e1e solid_color";
+          bg = "#f5f0ff solid_color";
         };
         # HDMI monitor on the left at 165Hz
         "HDMI-A-1" = {
@@ -151,7 +151,7 @@
         "${mod}+Shift+e" = "exec swaynag -t warning -m 'Exit Sway?' -B 'Yes' 'swaymsg exit'";
         
         # Lock screen
-        "${mod}+l" = "exec swaylock -f -c 1e1e1e";
+        "${mod}+l" = "exec swaylock -f -c f5f0ff";
         
         # Note: ${mod}+l is used for lock, use arrows for right focus
         "${mod}+Right" = "focus right";
@@ -260,7 +260,7 @@
       # Startup applications
       startup = [
         # Set GTK theme
-        { command = "gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'"; }
+        { command = "gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita'"; }
         # Start notification daemon
         { command = "mako"; }
         # Start swayr daemon
@@ -269,10 +269,10 @@
         { 
           command = ''
             swayidle -w \
-              timeout 300 'swaylock -f -c 1e1e1e' \
+              timeout 300 'swaylock -f -c f5f0ff' \
               timeout 600 'swaymsg "output * dpms off"' \
               resume 'swaymsg "output * dpms on"' \
-              before-sleep 'swaylock -f -c 1e1e1e'
+              before-sleep 'swaylock -f -c f5f0ff'
           ''; 
         }
       ];
@@ -287,35 +287,35 @@
         }
       ];
       
-      # Color scheme (dark theme matching alacritty)
+      # Color scheme (purple/violet light theme)
       colors = {
         focused = {
-          border = "#78dce8";
-          background = "#1e1e1e";
-          text = "#d4d4d4";
-          indicator = "#a9dc76";
-          childBorder = "#78dce8";
+          border = "#9333ea";
+          background = "#f5f0ff";
+          text = "#4a3a5c";
+          indicator = "#a855f7";
+          childBorder = "#9333ea";
         };
         focusedInactive = {
-          border = "#5b5b5b";
-          background = "#1e1e1e";
-          text = "#d4d4d4";
-          indicator = "#5b5b5b";
-          childBorder = "#5b5b5b";
+          border = "#c4b5fd";
+          background = "#faf4ff";
+          text = "#6b5b7a";
+          indicator = "#c4b5fd";
+          childBorder = "#c4b5fd";
         };
         unfocused = {
-          border = "#1e1e1e";
-          background = "#1e1e1e";
-          text = "#5b5b5b";
-          indicator = "#1e1e1e";
-          childBorder = "#1e1e1e";
+          border = "#e9e0f5";
+          background = "#faf4ff";
+          text = "#8b7a9c";
+          indicator = "#e9e0f5";
+          childBorder = "#e9e0f5";
         };
         urgent = {
-          border = "#f48771";
-          background = "#f48771";
-          text = "#1e1e1e";
-          indicator = "#f48771";
-          childBorder = "#f48771";
+          border = "#dc2626";
+          background = "#fef2f2";
+          text = "#991b1b";
+          indicator = "#dc2626";
+          childBorder = "#dc2626";
         };
       };
     };
@@ -407,6 +407,7 @@
       };
     };
     
+    # Purple/Violet Light Theme for Waybar
     style = ''
       * {
         font-family: "JetBrains Mono";
@@ -414,30 +415,31 @@
       }
 
       window#waybar {
-        background-color: rgba(30, 30, 30, 0.9);
-        color: #d4d4d4;
-        border-bottom: 2px solid #78dce8;
+        background-color: rgba(250, 244, 255, 0.95);
+        color: #4a3a5c;
+        border-bottom: 2px solid #9333ea;
       }
 
       #workspaces button {
         padding: 0 8px;
-        color: #d4d4d4;
+        color: #6b5b7a;
         background-color: transparent;
         border-bottom: 2px solid transparent;
       }
 
       #workspaces button:hover {
-        background: rgba(120, 220, 232, 0.2);
+        background: rgba(147, 51, 234, 0.15);
       }
 
       #workspaces button.focused {
-        border-bottom: 2px solid #78dce8;
-        color: #78dce8;
+        border-bottom: 2px solid #9333ea;
+        color: #9333ea;
+        background: rgba(147, 51, 234, 0.1);
       }
 
       #workspaces button.urgent {
-        background-color: #f48771;
-        color: #1e1e1e;
+        background-color: #dc2626;
+        color: #ffffff;
       }
 
       #clock,
@@ -447,26 +449,37 @@
       #custom-gammastep,
       #tray {
         padding: 0 10px;
+        color: #4a3a5c;
       }
 
       #custom-gammastep.on {
-        color: #ffd866;
+        color: #ca8a04;
       }
 
       #custom-gammastep.off {
-        color: #5b5b5b;
+        color: #9ca3af;
       }
 
       #battery.warning {
-        color: #ffd866;
+        color: #ca8a04;
       }
 
       #battery.critical {
-        color: #f48771;
+        color: #dc2626;
       }
 
       #network.disconnected {
-        color: #f48771;
+        color: #dc2626;
+      }
+
+      tooltip {
+        background-color: #faf4ff;
+        border: 1px solid #c4b5fd;
+        border-radius: 4px;
+      }
+
+      tooltip label {
+        color: #4a3a5c;
       }
     '';
   };
