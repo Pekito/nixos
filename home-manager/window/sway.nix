@@ -71,6 +71,9 @@
       # Use Super (Windows) key as the modifier
       modifier = "Mod4";
       
+      # Disable focus follows mouse
+      focus.followMouse = false;
+      
       # Default font
       fonts = {
         names = [ "JetBrains Mono" ];
@@ -189,9 +192,9 @@
         "${mod}+minus" = "scratchpad show";
         
         # Screenshots
+        "Print" = "exec grim -g \"$(slurp)\" - | wl-copy"; # Selection to clipboard
         "${mod}+Print" = "exec grim - | wl-copy"; # Full screen to clipboard
-        "${mod}+Shift+Print" = "exec grim -g \"$(slurp)\" - | wl-copy"; # Selection to clipboard
-        "${mod}+Alt+Print" = "exec grim ~/Pictures/screenshot-$(date +%Y%m%d-%H%M%S).png"; # Save to file
+        "${mod}+Shift+Print" = "exec grim -g \"$(slurp)\" ~/Pictures/screenshot-$(date +%Y%m%d-%H%M%S).png"; # Selection to file
         
         # Media keys
         "XF86AudioRaiseVolume" = "exec pamixer -i 5";
