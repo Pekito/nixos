@@ -121,6 +121,8 @@
           tap = "enabled";
           natural_scroll = "enabled";
           dwt = "enabled"; # Disable while typing
+          pointer_accel = "0.4"; # Increase sensitivity (-1 to 1)
+          accel_profile = "adaptive"; # or "flat" for linear response
         };
       };
       
