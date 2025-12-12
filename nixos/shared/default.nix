@@ -125,6 +125,7 @@
     tmux
     discord
     pavucontrol
+    bluetuith  # TUI for Bluetooth management
   ];
   # Use latest kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;

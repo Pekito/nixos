@@ -16,4 +16,5 @@
   # Add any packages or settings specific to this laptop
 
   system.stateVersion = "25.05";
+  hardware.bluetooth.enable = true;
 }
