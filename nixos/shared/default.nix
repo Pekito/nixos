@@ -95,6 +95,37 @@
     pulse.enable = true;
   };
 
+  # Font configuration - using Inter as Windows 11-like default
+  # Inter is an open-source font very similar to Windows 11's Segoe UI Variable
+  fonts = {
+    packages = with pkgs; [
+      inter                  # Windows 11-like system font (Segoe UI alternative)
+      noto-fonts             # Fallback for international characters
+      noto-fonts-cjk-sans    # CJK support
+      noto-fonts-emoji       # Emoji support
+    ];
+    
+    fontconfig = {
+      enable = true;
+      defaultFonts = {
+        sansSerif = [ "Inter" "Noto Sans" ];
+        serif = [ "Noto Serif" ];
+        monospace = [ "JetBrains Mono" "Noto Sans Mono" ];
+        emoji = [ "Noto Color Emoji" ];
+      };
+      # Subpixel rendering for sharper fonts (like Windows)
+      subpixel = {
+        rgba = "rgb";
+        lcdfilter = "default";
+      };
+      hinting = {
+        enable = true;
+        style = "slight";  # Windows-like hinting
+      };
+      antialias = true;
+    };
+  };
+
   # Define a user account
   users.users.pedro-pires = {
     isNormalUser = true;
@@ -125,7 +156,7 @@
     tmux
     discord
     pavucontrol
-    bluetuith  # TUI for Bluetooth management
+    bluetuith
   ];
   # Use latest kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
