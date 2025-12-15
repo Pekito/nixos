@@ -156,7 +156,7 @@
     tmux
     discord
     pavucontrol
-    bluetuith
+    bluetui
   ];
   # Use latest kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
