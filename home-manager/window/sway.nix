@@ -20,6 +20,7 @@
     pamixer         # PulseAudio mixer CLI
     swayr           # Window switcher and more
     gammastep       # Night light / blue light filter (CLI + indicator)
+    imv             # Image viewer for screen freeze during screenshots
   ]);
 
   # Gammastep (night light) service configuration
@@ -97,6 +98,8 @@
           { criteria = { title = "Picture-in-Picture"; }; command = "floating enable"; }
           # Float gammastep indicator if it opens a window
           { criteria = { app_id = "gammastep-indicator"; }; command = "floating enable"; }
+          # Float imv for screenshot freeze (fullscreen mode)
+          { criteria = { app_id = "imv"; }; command = "fullscreen enable"; }
         ];
       };
       
@@ -193,10 +196,13 @@
         "${mod}+Shift+minus" = "move scratchpad";
         "${mod}+minus" = "scratchpad show";
         
-        # Screenshots
-        "Print" = "exec grim -g \"$(slurp)\" - | wl-copy"; # Selection to clipboard
-        "${mod}+Print" = "exec grim - | wl-copy"; # Full screen to clipboard
-        "${mod}+Shift+Print" = "exec grim -g \"$(slurp)\" ~/Pictures/screenshot-$(date +%Y%m%d-%H%M%S).png"; # Selection to file
+        # Screenshots (with screen freeze for area selection)
+        # Selection to clipboard - freezes screen during selection
+        "Print" = ''exec bash -c 'tmp=$(mktemp /tmp/screenshot-XXXXXX.png) && grim "$tmp" && imv-wayland -f "$tmp" & sleep 0.2 && grim -g "$(slurp)" - | wl-copy; pkill imv-wayland; rm -f "$tmp"' '';
+        # Full screen to clipboard
+        "${mod}+Print" = "exec grim - | wl-copy";
+        # Selection to file - freezes screen during selection
+        "${mod}+Shift+Print" = ''exec bash -c 'tmp=$(mktemp /tmp/screenshot-XXXXXX.png) && grim "$tmp" && imv-wayland -f "$tmp" & sleep 0.2 && grim -g "$(slurp)" ~/Pictures/screenshot-$(date +%Y%m%d-%H%M%S).png; pkill imv-wayland; rm -f "$tmp"' '';
         
         # Media keys
         "XF86AudioRaiseVolume" = "exec pamixer -i 5";
