@@ -21,6 +21,7 @@
     swayr           # Window switcher and more
     gammastep       # Night light / blue light filter (CLI + indicator)
     imv             # Image viewer for screen freeze during screenshots
+    jq              # JSON processor (for getting focused output)
   ]);
 
   # Gammastep (night light) service configuration
@@ -196,13 +197,13 @@
         "${mod}+Shift+minus" = "move scratchpad";
         "${mod}+minus" = "scratchpad show";
         
-        # Screenshots (with screen freeze for area selection)
+        # Screenshots (with screen freeze for area selection - active monitor only)
         # Selection to clipboard - freezes screen during selection
-        "Print" = ''exec bash -c 'tmp=$(mktemp /tmp/screenshot-XXXXXX.png) && grim "$tmp" && imv-wayland -f "$tmp" & sleep 0.2 && grim -g "$(slurp)" - | wl-copy; pkill imv-wayland; rm -f "$tmp"' '';
-        # Full screen to clipboard
-        "${mod}+Print" = "exec grim - | wl-copy";
+        "Print" = ''exec bash -c 'output=$(swaymsg -t get_outputs | jq -r ".[] | select(.focused) | .name") && tmp=$(mktemp /tmp/screenshot-XXXXXX.png) && grim -o "$output" "$tmp" && imv-wayland -f "$tmp" & sleep 0.2 && grim -g "$(slurp)" - | wl-copy; pkill imv-wayland; rm -f "$tmp"' '';
+        # Full screen to clipboard (active monitor only)
+        "${mod}+Print" = ''exec bash -c 'grim -o "$(swaymsg -t get_outputs | jq -r ".[] | select(.focused) | .name")" - | wl-copy' '';
         # Selection to file - freezes screen during selection
-        "${mod}+Shift+Print" = ''exec bash -c 'tmp=$(mktemp /tmp/screenshot-XXXXXX.png) && grim "$tmp" && imv-wayland -f "$tmp" & sleep 0.2 && grim -g "$(slurp)" ~/Pictures/screenshot-$(date +%Y%m%d-%H%M%S).png; pkill imv-wayland; rm -f "$tmp"' '';
+        "${mod}+Shift+Print" = ''exec bash -c 'output=$(swaymsg -t get_outputs | jq -r ".[] | select(.focused) | .name") && tmp=$(mktemp /tmp/screenshot-XXXXXX.png) && grim -o "$output" "$tmp" && imv-wayland -f "$tmp" & sleep 0.2 && grim -g "$(slurp)" ~/Pictures/screenshot-$(date +%Y%m%d-%H%M%S).png; pkill imv-wayland; rm -f "$tmp"' '';
         
         # Media keys
         "XF86AudioRaiseVolume" = "exec pamixer -i 5";
