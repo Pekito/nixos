@@ -225,29 +225,29 @@
         "Mod1+Tab" = "exec swayr switch-window";
         "Mod1+Shift+Tab" = "exec swayr switch-window";
         
-        # Individual workspace switching
-        # Workspaces 1-5: Laptop display (eDP-1)
-        "${mod}+1" = "workspace number 1";
-        "${mod}+2" = "workspace number 2";
-        "${mod}+3" = "workspace number 3";
-        "${mod}+4" = "workspace number 4";
-        "${mod}+5" = "workspace number 5";
+                # Multi-monitor synchronized workspace switching
+        # When you press Mod+1, it switches to workspace 1 on main monitor AND workspace 6 on second monitor
+        "${mod}+1" = "workspace number 1; workspace number 6";
+        "${mod}+2" = "workspace number 2; workspace number 7";
+        "${mod}+3" = "workspace number 3; workspace number 8";
+        "${mod}+4" = "workspace number 4; workspace number 9";
+        "${mod}+5" = "workspace number 5; workspace number 10";
         
-        # Workspaces 6-10: HDMI monitor (HDMI-A-1)
-        "${mod}+6" = "workspace number 6";
-        "${mod}+7" = "workspace number 7";
-        "${mod}+8" = "workspace number 8";
-        "${mod}+9" = "workspace number 9";
-        "${mod}+0" = "workspace number 10";
-        
-        # Move windows to workspaces on laptop display (1-5)
+        # Move windows to synchronized workspaces
         "${mod}+Shift+1" = "move container to workspace number 1";
         "${mod}+Shift+2" = "move container to workspace number 2";
         "${mod}+Shift+3" = "move container to workspace number 3";
         "${mod}+Shift+4" = "move container to workspace number 4";
         "${mod}+Shift+5" = "move container to workspace number 5";
         
-        # Move windows to workspaces on HDMI monitor (6-10)
+        # Individual workspace access for second monitor (if needed)
+        "${mod}+6" = "workspace number 6";
+        "${mod}+7" = "workspace number 7";
+        "${mod}+8" = "workspace number 8";
+        "${mod}+9" = "workspace number 9";
+        "${mod}+0" = "workspace number 10";
+        
+        # Move windows to individual workspaces on second monitor
         "${mod}+Shift+6" = "move container to workspace number 6";
         "${mod}+Shift+7" = "move container to workspace number 7";
         "${mod}+Shift+8" = "move container to workspace number 8";
@@ -256,18 +256,18 @@
       };
       
       # Workspace configuration - Multi-monitor setup
-      # Workspaces 1-5 on laptop display (eDP-1)
-      # Workspaces 6-10 on HDMI monitor (HDMI-A-1)
       # IMPORTANT: Find your actual monitor names with: swaymsg -t get_outputs
+      # Common examples: "eDP-1" (laptop), "HDMI-A-1", "DP-1", "DP-2", etc.
+      # Replace the output names below with your actual monitor names
       workspaceOutputAssign = [
-        # Laptop display workspaces (1-5)
-        { workspace = "1"; output = "eDP-1"; }
+        # Main monitor workspaces (1-5)
+        { workspace = "1"; output = "eDP-1"; }  # Change "eDP-1" to your main monitor
         { workspace = "2"; output = "eDP-1"; }
         { workspace = "3"; output = "eDP-1"; }
         { workspace = "4"; output = "eDP-1"; }
         { workspace = "5"; output = "eDP-1"; }
-        # HDMI monitor workspaces (6-10)
-        { workspace = "6"; output = "HDMI-A-1"; }
+        # Secondary monitor workspaces (6-10)
+        { workspace = "6"; output = "HDMI-A-1"; }  # Change "HDMI-A-1" to your second monitor
         { workspace = "7"; output = "HDMI-A-1"; }
         { workspace = "8"; output = "HDMI-A-1"; }
         { workspace = "9"; output = "HDMI-A-1"; }
