@@ -93,6 +93,22 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
+    # Disable handsfree audio profile for Bluetooth devices
+    # This prevents automatic switching to low-quality HSP/HFP profile
+    wireplumber = {
+      enable = true;
+      configPackages = [
+        (pkgs.writeTextDir "share/wireplumber/wireplumber.conf.d/51-disable-handsfree-profile.conf" ''
+          wireplumber.settings = {
+            bluetooth.autoswitch-to-headset-profile = false
+          }
+
+          monitor.bluez.properties = {
+            bluez5.roles = [ a2dp_sink a2dp_source ]
+          }
+        '')
+      ];
+    };
   };
 
   # Font configuration - using Inter as Windows 11-like default
