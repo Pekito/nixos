@@ -78,9 +78,9 @@
       # Disable focus follows mouse
       focus.followMouse = false;
       
-      # Default font
+      # Default font with Unicode support
       fonts = {
-        names = [ "JetBrains Mono" ];
+        names = [ "Inter" "Noto Sans" "Noto Sans CJK JP" ];
         size = 10.0;
       };
       
@@ -393,29 +393,42 @@
         
         battery = {
           states = {
+            good = 95;
             warning = 30;
             critical = 15;
           };
           format = "{icon} {capacity}%";
           format-charging = "󰂄 {capacity}%";
           format-plugged = "󰂄 {capacity}%";
-          format-icons = [ "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
+          format-full = "󰁹 {capacity}%";
+          format-icons = [ "󰂃" "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
+          tooltip-format = "Battery: {capacity}% ({time})";
         };
         
         network = {
-          format-wifi = "󰖩 {signalStrength}%";
+          format-wifi = "{icon} {signalStrength}%";
           format-ethernet = "󰈀 {ifname}";
-          format-disconnected = "󰖪 ";
-          tooltip-format = "{ifname}: {ipaddr}";
+          format-disconnected = "󰖪 Disconnected";
+          format-icons = [ "󰤯" "󰤟" "󰤢" "󰤥" "󰤨" ];
+          tooltip-format-wifi = "WiFi: {essid} ({signalStrength}%)\nIP: {ipaddr}";
+          tooltip-format-ethernet = "Ethernet: {ifname}\nIP: {ipaddr}";
+          tooltip-format-disconnected = "No network connection";
         };
         
         pulseaudio = {
           format = "{icon} {volume}%";
-          format-muted = "󰝟 ";
+          format-muted = "󰝟 Muted";
           format-icons = {
+            headphone = "󰋋";
+            hands-free = "󱡏";
+            headset = "󰋎";
+            phone = "󰏲";
+            portable = "󰦧";
+            car = "󰄋";
             default = [ "󰕿" "󰖀" "󰕾" ];
           };
           on-click = "pavucontrol";
+          tooltip-format = "Volume: {volume}%\nDevice: {desc}";
         };
         
         tray = {
@@ -427,7 +440,7 @@
     # Purple/Violet Light Theme for Waybar
     style = ''
       * {
-        font-family: "JetBrains Mono";
+        font-family: "Inter", "Noto Sans", "Noto Sans CJK JP", "Noto Color Emoji";
         font-size: 13px;
       }
 
