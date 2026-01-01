@@ -288,6 +288,7 @@
             swayidle -w \
               timeout 300 'swaylock -f -c f5f0ff' \
               timeout 600 'swaymsg "output * dpms off"' \
+              timeout 1200 'systemctl hibernate' \
               resume 'swaymsg "output * dpms on"' \
               before-sleep 'swaylock -f -c f5f0ff'
           ''; 
