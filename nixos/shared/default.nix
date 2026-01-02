@@ -171,4 +171,7 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   programs.fish.enable = true;
+
+  # Enable nix-ld to run dynamically linked executables (needed for Claude Code and other binaries)
+  programs.nix-ld.enable = true;
 }
