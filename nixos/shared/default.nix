@@ -9,11 +9,13 @@
 
   # Cedilla fix for US International keyboard layout
   # This makes '+c produce ç instead of ć
-  # Note: On pure Wayland, some apps may need the XCompose file (configured in home-manager)
-  # For XWayland apps and GTK/Qt apps, these environment variables help
+  # Using fcitx5 as the input method for all apps (including Chromium-based like Chrome, Slack)
   environment.sessionVariables = {
-    GTK_IM_MODULE = "cedilla";
-    QT_IM_MODULE = "cedilla";
+    GTK_IM_MODULE = "fcitx";
+    QT_IM_MODULE = "fcitx";
+    XMODIFIERS = "@im=fcitx";
+    # For Chromium/Electron apps on Wayland
+    GLFW_IM_MODULE = "fcitx";
   };
 
   # Configure nixpkgs with overlays since home-manager.useGlobalPkgs = true
@@ -65,9 +67,29 @@
     LC_CTYPE = lib.mkDefault "pt_BR.UTF-8"; # Fix ç in us-intl.
   };
   i18n.inputMethod = {
-        enable = true;
-        type = "fcitx5";
-        fcitx5.waylandFrontend = true;
+    enable = true;
+    type = "fcitx5";
+    fcitx5 = {
+      waylandFrontend = true;
+      addons = with pkgs; [
+        fcitx5-gtk   # GTK input module for better app integration
+      ];
+      settings = {
+        inputMethod = {
+          "Groups/0" = {
+            Name = "Default";
+            "Default Layout" = "us-intl";
+            DefaultIM = "keyboard-us-intl";
+          };
+          "Groups/0/Items/0" = {
+            Name = "keyboard-us-intl";
+          };
+          "GroupOrder" = {
+            "0" = "Default";
+          };
+        };
+      };
+    };
   };
 
   # Desktop environment is now configured via mySystem.desktop.environment

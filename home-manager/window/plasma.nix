@@ -9,7 +9,7 @@
 
   # Configure Plasma
   programs.plasma = {
-    
+
     # Configure keyboard layout
     input.keyboard = {
       layouts = [
@@ -20,5 +20,6 @@
         }
       ];
     };
+
   };
 }
