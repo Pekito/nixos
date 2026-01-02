@@ -109,7 +109,7 @@
       inter                  # Windows 11-like system font (Segoe UI alternative)
       noto-fonts             # Fallback for international characters
       noto-fonts-cjk-sans    # CJK support
-      noto-fonts-emoji       # Emoji support
+      noto-fonts-color-emoji # Emoji support
     ];
     
     fontconfig = {
