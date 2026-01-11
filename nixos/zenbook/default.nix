@@ -11,7 +11,7 @@
   networking.hostName = "zenbook";
 
   # Desktop environment: "plasma", "sway", or "none"
-  mySystem.desktop.environment = "sway";
+  mySystem.desktop.environment = "plasma";
 
   # Zenbook-specific configuration goes here
   # Add any packages or settings specific to this laptop
