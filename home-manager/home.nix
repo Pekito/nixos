@@ -66,6 +66,7 @@
     enable = true;
     userName = "Pedro Luiz";
     userEmail = "p3dr0c4@live.com";
+    lfs.enable = true;
     # Additional config options
     extraConfig = {
       init.defaultBranch = "master";
