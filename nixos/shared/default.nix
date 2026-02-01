@@ -189,6 +189,7 @@
     btop
     claude-code
     obs-studio
+    dotnetCorePackages.dotnet_9.sdk
   ];
   # Use latest kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
