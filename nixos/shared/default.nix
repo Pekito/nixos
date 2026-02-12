@@ -190,6 +190,8 @@
     claude-code
     obs-studio
     dotnetCorePackages.dotnet_9.sdk
+    protonvpn-gui
+    qbittorrent
   ];
   # Use latest kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
