@@ -16,6 +16,8 @@
     plasma-manager.inputs.nixpkgs.follows = "nixpkgs";
     plasma-manager.inputs.home-manager.follows = "home-manager";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    rust-overlay.url = "github:oxalica/rust-overlay";
+    rust-overlay.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = {

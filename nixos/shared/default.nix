@@ -25,6 +25,7 @@
       inputs.self.overlays.additions
       inputs.self.overlays.modifications
       inputs.self.overlays.unstable-packages
+      inputs.rust-overlay.overlays.default
     ];
     config = {
       allowUnfree = true;
@@ -192,9 +193,12 @@
     dotnetCorePackages.dotnet_9.sdk
     protonvpn-gui
     qbittorrent
+    beamMinimal28Packages.elixir_1_19
   ];
   # Use latest kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
+
+  nix.settings.trusted-users = [ "root" "pedro-pires" ];
 
   programs.fish.enable = true;
 
