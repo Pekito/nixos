@@ -198,10 +198,14 @@
   # Use latest kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  nix.settings.trusted-users = [ "root" "pedro-pires" ];
+  nix.settings = {
+    trusted-users = [ "root" "pedro-pires" ];
+    experimental-features = [ "nix-command" "flakes" ];
+  };
 
   programs.fish.enable = true;
 
   # Enable nix-ld to run dynamically linked executables (needed for Claude Code and other binaries)
   programs.nix-ld.enable = true;
+
 }
