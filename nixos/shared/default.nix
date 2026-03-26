@@ -194,6 +194,9 @@
     protonvpn-gui
     qbittorrent
     beamMinimal28Packages.elixir_1_19
+    (rust-bin.stable.latest.default.override {
+      extensions = [ "rust-src" "rust-analyzer" ];
+    })
   ];
   # Use latest kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;

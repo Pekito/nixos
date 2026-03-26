@@ -12,7 +12,7 @@
     };
 
     shellInit = ''
-      # Add any fish shell initialization here
+      fish_add_path ~/.cargo/bin
     '';
 
     interactiveShellInit = ''
