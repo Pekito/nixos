@@ -156,11 +156,14 @@
     };
   };
 
+  # Enable Docker
+  virtualisation.docker.enable = true;
+
   # Define a user account
   users.users.pedro-pires = {
     isNormalUser = true;
     description = "Pedro Pires";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
     packages = with pkgs; [
       kdePackages.kate
     ];
